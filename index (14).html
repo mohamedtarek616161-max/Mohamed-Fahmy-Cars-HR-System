@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed Fahmy Cars | بوابة الموظفين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C81E3A;
+  --red-dark:#8F1229;
+  --red-light:#FBE3E8;
+  --red-glow: rgba(200,30,58,.25);
+  --ink:#15171C;
+  --charcoal:#22242B;
+  --slate:#464954;
+  --gray:#787C87;
+  --line:#E7E7EC;
+  --paper:#F4F4F7;
+  --white:#FFFFFF;
+  --success:#1E8E5A;
+  --success-bg:#E6F5EC;
+  --warn:#B9740E;
+  --warn-bg:#FBF0DD;
+  --danger-bg:#FBE7E9;
+  --radius-lg:20px;
+  --radius-md:14px;
+  --radius-sm:9px;
+  --shadow-1: 0 1px 2px rgba(20,20,30,.04), 0 1px 1px rgba(20,20,30,.03);
+  --shadow-2: 0 10px 30px rgba(20,20,30,.08), 0 2px 8px rgba(20,20,30,.05);
+  --shadow-3: 0 20px 50px rgba(20,20,30,.14), 0 4px 14px rgba(20,20,30,.08);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:'IBM Plex Sans Arabic', sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.display{ font-family:'Almarai','IBM Plex Sans Arabic',sans-serif; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+input,select,textarea{ font-family:inherit; }
+::-webkit-scrollbar{ width:8px; height:8px; }
+::-webkit-scrollbar-thumb{ background:#D5D5DC; border-radius:8px; }
+
+/* ---------- Utility ---------- */
+.hidden{ display:none !important; }
+.spin{ animation:spin 0.9s linear infinite; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+@keyframes fadeUp{ from{ opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+.fade-in{ animation:fadeUp .35s ease both; }
+
+/* ================= LOGIN ================= */
+#loginScreen{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(1100px 500px at 85% -10%, var(--red-glow), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(20,20,30,.5), transparent 60%),
+    linear-gradient(160deg, var(--ink), var(--charcoal) 55%, #2c1017 100%);
+  padding:24px;
+}
+.login-card{
+  width:100%; max-width:400px; background:var(--white);
+  border-radius:var(--radius-lg); box-shadow:var(--shadow-3);
+  padding:38px 32px 32px; position:relative; overflow:hidden;
+}
+.login-card::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:6px;
+  background:linear-gradient(90deg, var(--red-dark), var(--red) 50%, var(--red-dark));
+}
+.brand-mark{
+  width:54px; height:54px; border-radius:50%;
+  background:conic-gradient(from 220deg, var(--red-dark), var(--red), var(--red-light) 55%, var(--red) 80%, var(--red-dark));
+  display:flex; align-items:center; justify-content:center; margin:0 auto 18px;
+  box-shadow:0 8px 20px var(--red-glow);
+}
+.brand-mark span{
+  width:38px; height:38px; border-radius:50%; background:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--white); font-family:'Almarai'; font-weight:800; font-size:17px;
+}
+.login-card h1{ text-align:center; font-size:19px; font-weight:800; color:var(--ink); }
+.login-card p.sub{ text-align:center; color:var(--gray); font-size:13px; margin-top:6px; margin-bottom:26px; }
+.field{ margin-bottom:16px; }
+.field label{ display:block; font-size:12.5px; color:var(--slate); font-weight:600; margin-bottom:7px; }
+.field input{
+  width:100%; padding:13px 14px; border:1.5px solid var(--line); border-radius:var(--radius-sm);
+  font-size:15px; letter-spacing:.5px; transition:.15s; background:var(--paper);
+}
+.field input:focus{ outline:none; border-color:var(--red); background:var(--white); box-shadow:0 0 0 4px var(--red-light); }
+.btn{
+  width:100%; padding:13.5px; border-radius:var(--radius-sm); font-weight:700; font-size:15px;
+  transition:.15s; display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.btn-primary{ background:linear-gradient(135deg, var(--red), var(--red-dark)); color:#fff; box-shadow:0 10px 20px var(--red-glow); }
+.btn-primary:hover{ filter:brightness(1.06); transform:translateY(-1px); }
+.btn-primary:disabled{ opacity:.6; cursor:default; transform:none; }
+.btn-ghost{ background:var(--paper); color:var(--ink); border:1.5px solid var(--line); }
+.btn-ghost:hover{ background:var(--line); }
+.btn-outline-red{ background:var(--white); color:var(--red); border:1.5px solid var(--red-light); }
+.btn-outline-red:hover{ background:var(--red-light); }
+.error-msg{ background:var(--danger-bg); color:var(--red-dark); font-size:13px; padding:10px 12px; border-radius:var(--radius-sm); margin-bottom:14px; display:flex; gap:8px; align-items:center; }
+.login-foot{ text-align:center; margin-top:22px; font-size:11.5px; color:#ADB0B8; }
+
+/* ================= APP SHELL ================= */
+#appShell{ display:flex; min-height:100vh; }
+.sidebar{
+  width:242px; flex:none; background:linear-gradient(185deg, var(--ink), var(--charcoal) 80%);
+  color:#fff; display:flex; flex-direction:column; padding:22px 16px; position:sticky; top:0; height:100vh;
+}
+.sidebar-brand{ display:flex; align-items:center; gap:10px; padding:6px 8px 22px; }
+.sidebar-brand .mark{ width:34px; height:34px; border-radius:50%; background:conic-gradient(from 220deg, var(--red-dark), var(--red), var(--red-light) 55%, var(--red) 80%, var(--red-dark)); flex:none; }
+.sidebar-brand .txt strong{ display:block; font-size:13.5px; font-weight:800; font-family:'Almarai'; }
+.sidebar-brand .txt span{ font-size:10.5px; color:#9A9DA6; }
+.nav-group{ margin-top:6px; display:flex; flex-direction:column; gap:3px; flex:1; overflow-y:auto; }
+.nav-label{ font-size:10.5px; color:#787C87; font-weight:700; margin:14px 10px 6px; letter-spacing:.4px; }
+.nav-item{
+  display:flex; align-items:center; gap:11px; padding:10.5px 12px; border-radius:11px;
+  color:#C7C9D1; font-size:13.5px; font-weight:600; transition:.15s; text-align:right; width:100%;
+}
+.nav-item .ic{ width:18px; height:18px; flex:none; opacity:.85; }
+.nav-item:hover{ background:rgba(255,255,255,.06); color:#fff; }
+.nav-item.active{ background:linear-gradient(135deg, var(--red), var(--red-dark)); color:#fff; box-shadow:0 6px 16px rgba(200,30,58,.35); }
+.nav-item .badge{ margin-right:auto; background:var(--red); color:#fff; font-size:10.5px; font-weight:800; padding:1.5px 7px; border-radius:20px; }
+.nav-item.active .badge{ background:rgba(255,255,255,.25); }
+.sidebar-foot{ border-top:1px solid rgba(255,255,255,.08); padding-top:14px; margin-top:10px; }
+.logout-btn{ display:flex; align-items:center; gap:9px; color:#C7C9D1; font-size:13px; font-weight:600; padding:10px 12px; width:100%; border-radius:11px; }
+.logout-btn:hover{ background:rgba(255,255,255,.06); color:#fff; }
+
+.content{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.topbar{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:16px 28px; background:rgba(244,244,247,.85); backdrop-filter:blur(6px);
+  position:sticky; top:0; z-index:5; border-bottom:1px solid var(--line);
+}
+.topbar h2{ font-size:17px; font-weight:800; }
+.topbar .crumb{ font-size:12px; color:var(--gray); margin-top:2px; }
+.mobile-toggle{ display:none; }
+.viewport{ padding:24px 28px 60px; flex:1; }
+
+/* ================= CARDS / GRID ================= */
+.grid{ display:grid; gap:16px; }
+.grid-tiles{ grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); }
+.card{
+  background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow-2);
+  border:1px solid var(--line); padding:20px;
+}
+.tile{
+  display:flex; flex-direction:column; gap:12px; text-align:right; position:relative; overflow:hidden;
+  transition:.18s;
+}
+.tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-3); border-color:var(--red-light); }
+.tile .ic-wrap{
+  width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background:var(--red-light); color:var(--red-dark);
+}
+.tile .ic-wrap svg{ width:22px; height:22px; }
+.tile h4{ font-size:14.5px; font-weight:700; }
+.tile p{ font-size:11.5px; color:var(--gray); }
+
+/* Badge / employee card */
+.badge-card{
+  display:flex; align-items:center; gap:20px; padding:24px 26px;
+  background:linear-gradient(120deg, var(--ink) 0%, var(--charcoal) 55%, #33121a 130%);
+  color:#fff; border-radius:var(--radius-lg); box-shadow:var(--shadow-3); position:relative; overflow:hidden;
+}
+.badge-card::after{
+  content:""; position:absolute; left:-60px; top:-60px; width:220px; height:220px; border-radius:50%;
+  background:radial-gradient(circle, var(--red-glow), transparent 70%);
+}
+.badge-pic{
+  width:74px; height:74px; border-radius:50%; background:var(--red-light); color:var(--red-dark);
+  display:flex; align-items:center; justify-content:center; font-family:'Almarai'; font-weight:800; font-size:24px;
+  flex:none; border:3px solid rgba(255,255,255,.15); background-size:cover; background-position:center;
+}
+.badge-info h3{ font-size:19px; font-weight:800; }
+.badge-info .role{ font-size:13px; color:#D9DADF; margin-top:3px; }
+.badge-info .meta{ display:flex; gap:16px; margin-top:12px; flex-wrap:wrap; }
+.badge-info .meta div{ font-size:11.5px; color:#B7B9C1; }
+.badge-info .meta strong{ display:block; color:#fff; font-size:13px; font-weight:700; margin-top:2px; }
+
+.section-title{ font-size:15px; font-weight:800; margin:26px 0 14px; display:flex; align-items:center; gap:8px; }
+.section-title .dot{ width:7px; height:16px; border-radius:4px; background:linear-gradient(var(--red), var(--red-dark)); }
+
+/* Stat row */
+.stat-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+.stat{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius-md); padding:16px; }
+.stat .label{ font-size:11.5px; color:var(--gray); font-weight:600; }
+.stat .value{ font-size:20px; font-weight:800; margin-top:6px; font-family:'Almarai'; }
+.stat.accent{ background:linear-gradient(135deg, var(--red), var(--red-dark)); color:#fff; }
+.stat.accent .label{ color:rgba(255,255,255,.8); }
+
+/* Detail rows / lists */
+.kv-list{ display:flex; flex-direction:column; }
+.kv-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 2px; border-bottom:1px solid var(--line); font-size:13.5px; }
+.kv-row:last-child{ border-bottom:none; }
+.kv-row .k{ color:var(--gray); }
+.kv-row .v{ font-weight:700; }
+.kv-row .v.pos{ color:var(--success); }
+.kv-row .v.neg{ color:var(--red-dark); }
+
+/* Table */
+.table-wrap{ overflow-x:auto; border-radius:var(--radius-md); border:1px solid var(--line); }
+table{ width:100%; border-collapse:collapse; font-size:12.8px; min-width:600px; }
+thead th{ background:var(--paper); color:var(--slate); font-weight:700; padding:11px 12px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--line); }
+tbody td{ padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; color:var(--ink); }
+tbody tr:last-child td{ border-bottom:none; }
+tbody tr:hover{ background:var(--paper); }
+.pill{ display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+.pill.ok{ background:var(--success-bg); color:var(--success); }
+.pill.warn{ background:var(--warn-bg); color:var(--warn); }
+.pill.bad{ background:var(--danger-bg); color:var(--red-dark); }
+
+/* Filters */
+.filters{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+.filters select{ padding:9px 12px; border-radius:var(--radius-sm); border:1.5px solid var(--line); font-size:13px; background:var(--white); }
+.filters select:focus{ outline:none; border-color:var(--red); }
+
+/* Gauge (signature element) */
+.gauge-wrap{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
+.gauge-num{ font-family:'Almarai'; font-weight:800; }
+
+/* Tabs */
+.tabs{ display:flex; gap:6px; background:var(--paper); padding:5px; border-radius:12px; width:fit-content; margin-bottom:18px; flex-wrap:wrap; }
+.tab-btn{ padding:9px 18px; border-radius:9px; font-size:13px; font-weight:700; color:var(--slate); }
+.tab-btn.active{ background:var(--white); color:var(--red-dark); box-shadow:var(--shadow-1); }
+
+/* Requests */
+.req-card{ border:1px solid var(--line); border-radius:var(--radius-md); padding:16px; margin-bottom:12px; background:var(--white); }
+.req-card .top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+.req-card .top h5{ font-size:14px; font-weight:700; }
+.req-card .top .sub{ font-size:11.5px; color:var(--gray); margin-top:3px; }
+.req-card .body-txt{ font-size:12.5px; color:var(--slate); margin-top:10px; line-height:1.7; }
+.req-actions{ display:flex; gap:8px; margin-top:12px; }
+.req-actions button{ flex:1; padding:9px; border-radius:9px; font-size:12.5px; font-weight:700; }
+.btn-approve{ background:var(--success-bg); color:var(--success); }
+.btn-approve:hover{ background:#d3f0dd; }
+.btn-reject{ background:var(--danger-bg); color:var(--red-dark); }
+.btn-reject:hover{ background:#f6ccd2; }
+
+/* Form */
+.form-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+.form-grid .full{ grid-column:1/-1; }
+.form-grid label{ display:block; font-size:12px; font-weight:600; color:var(--slate); margin-bottom:6px; }
+.form-grid input, .form-grid select, .form-grid textarea{
+  width:100%; padding:11px 12px; border:1.5px solid var(--line); border-radius:var(--radius-sm); font-size:13.5px; background:var(--paper);
+}
+.form-grid textarea{ resize:vertical; min-height:70px; }
+.form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus{ outline:none; border-color:var(--red); background:var(--white); box-shadow:0 0 0 4px var(--red-light); }
+
+/* JD sections */
+.jd-block{ margin-bottom:18px; }
+.jd-block h5{ font-size:13.5px; font-weight:800; color:var(--red-dark); margin-bottom:8px; }
+.jd-block ul{ padding-right:18px; font-size:13px; color:var(--slate); line-height:1.9; }
+.jd-resp{ display:flex; justify-content:space-between; gap:10px; font-size:12.8px; padding:9px 0; border-bottom:1px dashed var(--line); }
+.jd-resp .lab{ color:var(--gray); flex:none; width:220px; }
+
+/* Org chart */
+.org-chain{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:22px; }
+.org-node{ display:flex; align-items:center; gap:9px; background:var(--white); border:1px solid var(--line); border-radius:30px; padding:7px 14px 7px 8px; font-size:12.5px; font-weight:600; box-shadow:var(--shadow-1); }
+.org-node .avc{ width:26px; height:26px; border-radius:50%; background:var(--red-light); color:var(--red-dark); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; font-family:'Almarai'; }
+.org-arrow{ color:var(--gray); }
+.org-me{ background:linear-gradient(135deg, var(--red), var(--red-dark)); color:#fff; border-color:transparent; }
+.org-me .avc{ background:rgba(255,255,255,.2); color:#fff; }
+.team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:12px; }
+.team-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius-md); padding:14px; text-align:center; }
+.team-card .avc{ width:44px; height:44px; border-radius:50%; background:var(--red-light); color:var(--red-dark); display:flex; align-items:center; justify-content:center; font-family:'Almarai'; font-weight:800; margin:0 auto 8px; }
+.team-card h6{ font-size:12.5px; font-weight:700; }
+.team-card span{ font-size:10.5px; color:var(--gray); display:block; margin-top:3px; }
+
+/* States */
+.empty-state, .loading-state{ text-align:center; padding:50px 20px; color:var(--gray); }
+.empty-state svg, .loading-state svg{ width:44px; height:44px; margin-bottom:12px; opacity:.5; }
+.toast{
+  position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+  padding:12px 20px; border-radius:12px; font-size:13px; box-shadow:var(--shadow-3); z-index:50; display:flex; gap:8px; align-items:center;
+}
+.toast.err{ background:var(--red-dark); }
+.toast.ok{ background:var(--success); }
+
+@media (max-width: 880px){
+  .sidebar{ position:fixed; right:-260px; z-index:40; transition:.25s; box-shadow:var(--shadow-3); }
+  .sidebar.open{ right:0; }
+  .mobile-toggle{ display:flex; width:38px; height:38px; align-items:center; justify-content:center; border-radius:10px; background:var(--white); border:1px solid var(--line); }
+  .viewport{ padding:18px 14px 50px; }
+  .topbar{ padding:14px 16px; }
+  .badge-card{ flex-direction:column; text-align:center; }
+  .badge-info .meta{ justify-content:center; }
+  .jd-resp{ flex-direction:column; gap:2px; }
+  .jd-resp .lab{ width:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="loginScreen">
+  <div class="login-card fade-in">
+    <div class="brand-mark"><span>MFC</span></div>
+    <h1>بوابة موظفي محمد فهمي للسيارات</h1>
+    <p class="sub">سجّل دخولك بكلمة المرور الخاصة بك</p>
+    <div id="loginError" class="error-msg hidden"></div>
+    <form id="loginForm">
+      <div class="field">
+        <label>كلمة المرور</label>
+        <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off" required>
+      </div>
+      <button type="submit" class="btn btn-primary" id="loginBtn">دخول</button>
+    </form>
+    <div class="login-foot">Mohamed Fahmy Cars &middot; نظام الموارد البشرية</div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="appShell" class="hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark"></div>
+      <div class="txt"><strong>Mohamed Fahmy Cars</strong><span>بوابة الموظفين</span></div>
+    </div>
+    <div class="nav-group" id="navGroup"></div>
+    <div class="sidebar-foot">
+      <button class="logout-btn" id="logoutBtn">
+        <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        تسجيل الخروج
+      </button>
+    </div>
+  </aside>
+
+  <div class="content">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="mobile-toggle" id="mobileToggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
+        <div>
+          <h2 id="pageTitle">الرئيسية</h2>
+          <div class="crumb" id="pageCrumb">نظرة عامة</div>
+        </div>
+      </div>
+    </div>
+    <div class="viewport" id="viewport"></div>
+  </div>
+</div>
+
+<div id="toastHost"></div>
+
+<script>
+/* ============================================================
+   إعدادات عامة
+   ============================================================ */
+const API_URL = "https://script.google.com/macros/s/AKfycbwWmyp2YjXmWatLDCp94pwDSNHmfTpC09iB4r5EsIzhlErDIMh_v1ZMqfg-BNaA8aJi/exec";
+const MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+
+let state = {
+  password: null,
+  me: null,           // { jobCode, name, jobTitle, department, ... }
+  view: "home",
+  month: MONTHS[new Date().getMonth()],
+  year: String(new Date().getFullYear()),
+};
+
+/* ============================================================
+   استدعاء الـ API
+   ============================================================ */
+async function callApi(fn, args = []) {
+  const url = API_URL + "?fn=" + encodeURIComponent(fn) + "&args=" + encodeURIComponent(JSON.stringify(args));
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("تعذر الاتصال بالخادم");
+  return res.json();
+}
+
+function esc(v){
+  if (v === null || v === undefined) return "";
+  return String(v).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+function nn(v){ return (v === null || v === undefined || v === "") ? "—" : v; }
+
+function toast(msg, type="ok"){
+  const host = document.getElementById("toastHost");
+  const el = document.createElement("div");
+  el.className = "toast " + (type === "err" ? "err" : "ok");
+  el.textContent = msg;
+  host.appendChild(el);
+  setTimeout(()=> el.remove(), 3200);
+}
+
+function initials(name){
+  if (!name) return "؟";
+  const parts = String(name).trim().split(/\s+/);
+  return parts[0] ? parts[0].charAt(0) : "؟";
+}
+
+/* ============================================================
+   تسجيل الدخول
+   ============================================================ */
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const pass = document.getElementById("passwordInput").value.trim();
+  const errBox = document.getElementById("loginError");
+  const btn = document.getElementById("loginBtn");
+  errBox.classList.add("hidden");
+  if (!pass) return;
+  btn.disabled = true;
+  btn.textContent = "جاري الدخول...";
+  try {
+    const me = await callApi("getEmployeeBasicInfo", [pass]);
+    if (!me || !me.jobCode) {
+      errBox.textContent = "كلمة المرور غير صحيحة، حاول تاني";
+      errBox.classList.remove("hidden");
+      btn.disabled = false; btn.textContent = "دخول";
+      return;
+    }
+    state.password = pass;
+    state.me = me;
+    document.getElementById("loginScreen").classList.add("hidden");
+    document.getElementById("appShell").classList.remove("hidden");
+    buildNav();
+    goTo("home");
+  } catch (err) {
+    errBox.textContent = "حصل خطأ في الاتصال، حاول تاني";
+    errBox.classList.remove("hidden");
+  }
+  btn.disabled = false; btn.textContent = "دخول";
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  state = { password:null, me:null, view:"home", month: MONTHS[new Date().getMonth()], year:String(new Date().getFullYear()) };
+  document.getElementById("appShell").classList.add("hidden");
+  document.getElementById("loginScreen").classList.remove("hidden");
+  document.getElementById("passwordInput").value = "";
+});
+
+document.getElementById("mobileToggle").addEventListener("click", () => {
+  document.getElementById("sidebar").classList.toggle("open");
+});
+
+/* ============================================================
+   الأيقونات (SVG بسيطة بخط واحد)
+   ============================================================ */
+const ICONS = {
+  home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+  salary: '<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.4"/><path d="M7 6V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1"/>',
+  attendance: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  leave: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+  medical: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M12 9v6M9 12h6"/>',
+  jd: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/>',
+  kpis: '<path d="M12 21a9 9 0 1 1 9-9"/><path d="M12 12l5-3"/><circle cx="12" cy="12" r="1.4"/>',
+  orgchart: '<circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="19" r="2.4"/><circle cx="19" cy="19" r="2.4"/><path d="M12 7.4V12M12 12L5 16.6M12 12l7 4.6"/>',
+  requests: '<path d="M4 4h16v13H8l-4 4z"/><path d="M8 9h8M8 12.5h5"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+};
+function svgIcon(name, size=18){
+  return `<svg class="ic" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]||""}</svg>`;
+}
+
+/* ============================================================
+   بناء القائمة الجانبية
+   ============================================================ */
+const NAV_ITEMS = [
+  { key:"home", label:"الرئيسية", icon:"home" },
+  { key:"salary", label:"كشف المرتب", icon:"salary" },
+  { key:"attendance", label:"الحضور والانصراف", icon:"attendance" },
+  { key:"leave", label:"رصيد الإجازات", icon:"leave" },
+  { key:"medical", label:"البطاقة الطبية", icon:"medical" },
+  { key:"jd", label:"الوصف الوظيفي", icon:"jd" },
+  { key:"kpis", label:"تقييم الأداء", icon:"kpis" },
+  { key:"orgchart", label:"الهيكل التنظيمي", icon:"orgchart" },
+  { key:"requests", label:"الطلبات", icon:"requests" },
+];
+function buildNav(){
+  const nav = document.getElementById("navGroup");
+  nav.innerHTML = `<div class="nav-label">القوائم</div>` + NAV_ITEMS.map(item => `
+    <button class="nav-item" data-view="${item.key}">
+      ${svgIcon(item.icon)}<span>${item.label}</span>
+    </button>`).join("");
+  nav.querySelectorAll(".nav-item").forEach(btn=>{
+    btn.addEventListener("click", ()=> goTo(btn.dataset.view));
+  });
+}
+function setActiveNav(view){
+  document.querySelectorAll(".nav-item").forEach(b=> b.classList.toggle("active", b.dataset.view===view));
+}
+
+/* ============================================================
+   التنقل بين الشاشات
+   ============================================================ */
+const PAGE_META = {
+  home:{ title:"الرئيسية", crumb:"نظرة عامة على حسابك" },
+  salary:{ title:"كشف المرتب", crumb:"تفاصيل المستحقات والاستقطاعات" },
+  attendance:{ title:"الحضور والانصراف", crumb:"سجل الحضور الشهري" },
+  leave:{ title:"رصيد الإجازات", crumb:"الرصيد والسجل" },
+  medical:{ title:"البطاقة الطبية", crumb:"بيانات التأمين الطبي" },
+  jd:{ title:"الوصف الوظيفي", crumb:"المهام والمسؤوليات" },
+  kpis:{ title:"تقييم الأداء", crumb:"مؤشرات الأداء الشهرية" },
+  orgchart:{ title:"الهيكل التنظيمي", crumb:"موقعك في الهيكل" },
+  requests:{ title:"الطلبات", crumb:"إجازات · أذونات · مأموريات" },
+};
+async function goTo(view){
+  state.view = view;
+  setActiveNav(view);
+  document.getElementById("sidebar").classList.remove("open");
+  const meta = PAGE_META[view] || {title:"", crumb:""};
+  document.getElementById("pageTitle").textContent = meta.title;
+  document.getElementById("pageCrumb").textContent = meta.crumb;
+  const vp = document.getElementById("viewport");
+  vp.innerHTML = loadingHtml();
+  try {
+    if (view === "home") return renderHome();
+    if (view === "salary") return renderMonthlyReport("salary");
+    if (view === "attendance") return renderMonthlyReport("attendance");
+    if (view === "leave") return renderLeave();
+    if (view === "medical") return renderMedical();
+    if (view === "jd") return renderJD();
+    if (view === "kpis") return renderKPIs();
+    if (view === "orgchart") return renderOrgChart();
+    if (view === "requests") return renderRequests();
+  } catch (err) {
+    vp.innerHTML = errorHtml(err.message);
+  }
+}
+
+function loadingHtml(){
+  return `<div class="loading-state fade-in">
+    <svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="42" stroke-linecap="round"/></svg>
+    <div>جاري تحميل البيانات...</div>
+  </div>`;
+}
+function errorHtml(msg){
+  return `<div class="empty-state fade-in">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16" r=".6"/></svg>
+    <div>${esc(msg || "حصل خطأ غير متوقع")}</div>
+  </div>`;
+}
+function emptyHtml(msg){
+  return `<div class="empty-state fade-in">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 7l3-4h12l3 4"/></svg>
+    <div>${esc(msg)}</div>
+  </div>`;
+}
+
+function monthYearPicker(onChange){
+  const monthOpts = MONTHS.map(m=>`<option value="${m}" ${m===state.month?"selected":""}>${m}</option>`).join("");
+  const curYear = new Date().getFullYear();
+  let yearOpts = "";
+  for (let y = curYear+1; y >= curYear-3; y--) yearOpts += `<option value="${y}" ${String(y)===state.year?"selected":""}>${y}</option>`;
+  const wrap = document.createElement("div");
+  wrap.className = "filters";
+  wrap.innerHTML = `
+    <select id="monthSel">${monthOpts}</select>
+    <select id="yearSel">${yearOpts}</select>`;
+  setTimeout(()=>{
+    document.getElementById("monthSel").addEventListener("change", e=>{ state.month = e.target.value; onChange(); });
+    document.getElementById("yearSel").addEventListener("change", e=>{ state.year = e.target.value; onChange(); });
+  },0);
+  return wrap.outerHTML;
+}
+
+/* ============================================================
+   الرئيسية
+   ============================================================ */
+function renderHome(){
+  const me = state.me;
+  const vp = document.getElementById("viewport");
+  const picStyle = me.picUrl ? `style="background-image:url('${esc(me.picUrl)}')"` : "";
+  vp.innerHTML = `
+    <div class="badge-card fade-in">
+      <div class="badge-pic" ${picStyle}>${me.picUrl ? "" : initials(me.name)}</div>
+      <div class="badge-info">
+        <h3>${esc(me.name)}</h3>
+        <div class="role">${esc(me.jobTitle || "")}</div>
+        <div class="meta">
+          <div>القسم<strong>${esc(nn(me.department))}</strong></div>
+          <div>الكود الوظيفي<strong>${esc(nn(me.jobCode))}</strong></div>
+          <div>المدير المباشر<strong>${esc(nn(me.directManager))}</strong></div>
+          <div>ساعات الشيفت<strong>${esc(nn(me.shiftHours))}</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="dot"></span>الخدمات المتاحة</div>
+    <div class="grid grid-tiles" id="homeTiles"></div>
+  `;
+  const tiles = NAV_ITEMS.filter(i=>i.key!=="home").map(i=>`
+    <button class="card tile fade-in" data-view="${i.key}">
+      <div class="ic-wrap">${svgIcon(i.icon,22)}</div>
+      <h4>${i.label}</h4>
+      <p>${PAGE_META[i.key].crumb}</p>
+    </button>
+  `).join("");
+  document.getElementById("homeTiles").innerHTML = tiles;
+  document.querySelectorAll("#homeTiles .tile").forEach(t=> t.addEventListener("click", ()=> goTo(t.dataset.view)));
+}
+
+/* ============================================================
+   كشف المرتب + الحضور (شهر/سنة)
+   ============================================================ */
+async function renderMonthlyReport(type){
+  const vp = document.getElementById("viewport");
+  const picker = monthYearPicker(()=> renderMonthlyReport(type));
+  vp.innerHTML = picker + loadingHtml();
+  const data = await callApi("getEmployeeData", [state.password, state.month, state.year, type]);
+  const body = document.createElement("div");
+  if (type === "salary") body.innerHTML = data && data.type==="salary" ? salaryHtml(data) : emptyHtml("لا يوجد كشف مرتب لهذا الشهر");
+  if (type === "attendance") body.innerHTML = data && data.records && data.records.length ? attendanceHtml(data) : emptyHtml("لا يوجد سجل حضور لهذا الشهر");
+  vp.innerHTML = picker + body.innerHTML;
+  // rebind picker listeners lost by innerHTML overwrite
+  document.getElementById("monthSel").addEventListener("change", e=>{ state.month = e.target.value; renderMonthlyReport(type); });
+  document.getElementById("yearSel").addEventListener("change", e=>{ state.year = e.target.value; renderMonthlyReport(type); });
+}
+
+function salaryHtml(d){
+  const s = d.salary || {}, ent = d.entitlements || {}, ded = d.deductions || {};
+  return `
+    <div class="stat-row fade-in">
+      <div class="stat accent"><div class="label">صافي المرتب</div><div class="value">${esc(nn(s.net))}</div></div>
+      <div class="stat"><div class="label">الأساسي</div><div class="value">${esc(nn(s.basic))}</div></div>
+      <div class="stat"><div class="label">إجمالي المستحقات</div><div class="value" style="color:var(--success)">${esc(nn(s.totalEntitlements))}</div></div>
+      <div class="stat"><div class="label">إجمالي الاستقطاعات</div><div class="value" style="color:var(--red-dark)">${esc(nn(s.totalDeductions))}</div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr; margin-top:18px;">
+      <div class="card">
+        <h4 style="font-size:13.5px;font-weight:800;margin-bottom:10px;">المستحقات</h4>
+        <div class="kv-list">
+          ${kv("بدل وجبة", ent.mealAllowance)}${kv("بدل انتقال", ent.transportAllowance)}
+          ${kv("ساعات إضافي", ent.overtimeHours)}${kv("مبلغ الإضافي", ent.overtimeAmount, true)}
+          ${kv("بدل سفر", ent.travelAllowance)}${kv("مكافآت", ent.bonuses, true)}
+          ${kv("علاوة سنوية", ent.annualIncrease)}${kv("حافز شهري", ent.monthlyIncentive, true)}
+          ${kv("رجعي", ent.retroactive)}
+        </div>
+      </div>
+      <div class="card">
+        <h4 style="font-size:13.5px;font-weight:800;margin-bottom:10px;">الاستقطاعات</h4>
+        <div class="kv-list">
+          ${kv("تأمينات اجتماعية", ded.socialInsurance, false, true)}${kv("تأمين طبي", ded.medicalInsurance, false, true)}
+          ${kv("سلف", ded.loans, false, true)}${kv("أيام غياب", ded.absenceDays)}
+          ${kv("مبلغ الغياب", ded.absenceAmount, false, true)}${kv("أيام جزاء", ded.penaltyDays)}
+          ${kv("مبلغ الجزاء", ded.penaltyAmount, false, true)}${kv("خصم بصمة", ded.penaltyFingerprintAmount, false, true)}
+          ${kv("خصم انصراف مبكر", ded.earlyLeaveAmount, false, true)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+function kv(label, val, pos, neg){
+  const cls = pos ? "pos" : (neg ? "neg" : "");
+  return `<div class="kv-row"><span class="k">${label}</span><span class="v ${cls}">${esc(nn(val))}</span></div>`;
+}
+
+function attendanceHtml(d){
+  const rows = d.records.map(r=>`
+    <tr>
+      <td>${esc(r.date)}</td><td>${esc(r.dayName)}</td>
+      <td>${esc(r.actualIn||"—")}</td><td>${esc(r.actualOut||"—")}</td>
+      <td>${esc(r.lateHours||"0")}</td><td>${esc(r.earlyLeaveHours||"0")}</td><td>${esc(r.overtimeHours||"0")}</td>
+      <td>${statusPill(r.dayStatus)}</td>
+    </tr>`).join("");
+  return `<div class="table-wrap fade-in"><table>
+    <thead><tr><th>التاريخ</th><th>اليوم</th><th>حضور</th><th>انصراف</th><th>تأخير</th><th>انصراف مبكر</th><th>إضافي</th><th>الحالة</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+function statusPill(status){
+  const s = String(status||"");
+  let cls = "warn";
+  if (/حاضر|منتظم/.test(s)) cls = "ok";
+  if (/غياب|غائب/.test(s)) cls = "bad";
+  return `<span class="pill ${cls}">${esc(s || "—")}</span>`;
+}
+
+/* ============================================================
+   رصيد الإجازات
+   ============================================================ */
+async function renderLeave(){
+  const data = await callApi("getEmployeeData", [state.password, "", "", "leave"]);
+  const vp = document.getElementById("viewport");
+  if (!data || !data.employee) { vp.innerHTML = emptyHtml("لا توجد بيانات إجازات متاحة"); return; }
+  const e = data.employee;
+  const rows = (data.records||[]).map(r=>`
+    <tr><td>${esc(r.leaveType)}</td><td>${esc(r.startDate)}</td><td>${esc(r.endDate)}</td><td>${esc(r.daysTaken)}</td></tr>
+  `).join("");
+  vp.innerHTML = `
+    <div class="stat-row fade-in">
+      <div class="stat accent"><div class="label">الرصيد المتبقي</div><div class="value">${esc(nn(e.remainingLeave))}</div></div>
+      <div class="stat"><div class="label">إجمالي السنوي</div><div class="value">${esc(nn(e.annualLeaveTotal))}</div></div>
+      <div class="stat"><div class="label">مستخدم</div><div class="value">${esc(nn(e.annualLeaveUsed))}</div></div>
+      <div class="stat"><div class="label">إجازات عارضة</div><div class="value">${esc(nn(e.emergencyLeave))}</div></div>
+      <div class="stat"><div class="label">مرضي</div><div class="value">${esc(nn(e.sickLeaveTotal))}</div></div>
+      <div class="stat"><div class="label">بدون أجر</div><div class="value">${esc(nn(e.unpaidLeave))}</div></div>
+    </div>
+    <div class="section-title"><span class="dot"></span>سجل الإجازات</div>
+    ${rows ? `<div class="table-wrap fade-in"><table><thead><tr><th>النوع</th><th>من</th><th>إلى</th><th>عدد الأيام</th></tr></thead><tbody>${rows}</tbody></table></div>` : emptyHtml("لا يوجد سجل إجازات سابق")}
+  `;
+}
+
+/* ============================================================
+   البطاقة الطبية
+   ============================================================ */
+async function renderMedical(){
+  const data = await callApi("getEmployeeData", [state.password, "", "", "medical"]);
+  const vp = document.getElementById("viewport");
+  if (!data || !data.type) { vp.innerHTML = emptyHtml("لا توجد بيانات تأمين طبي مسجلة"); return; }
+  vp.innerHTML = `
+    <div class="card fade-in" style="max-width:460px;">
+      <div class="kv-list">
+        ${kv("الاسم", data.name)}
+        ${kv("الكود الوظيفي", data.jobCode)}
+        ${kv("حالة التأمين", data.medicalStatus)}
+        ${kv("رقم البطاقة", data.cardNumber)}
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   الوصف الوظيفي
+   ============================================================ */
+async function renderJD(){
+  const data = await callApi("getEmployeeData", [state.password, "", "", "jd"]);
+  const vp = document.getElementById("viewport");
+  if (!data || !data.type) { vp.innerHTML = emptyHtml("لا يوجد وصف وظيفي مسجل لمسماك الوظيفي"); return; }
+  const tasks = (data.tasks||[]).map(t=>`<li>${esc(t)}</li>`).join("");
+  const resp = (data.responsibilities||[]).map(r=>`<div class="jd-resp"><span class="lab">${esc(r.label)}</span><span>${esc(nn(r.value))}</span></div>`).join("");
+  const rel = (arr)=> (arr||[]).map(t=>`<li>${esc(t)}</li>`).join("") || "<li>—</li>";
+  vp.innerHTML = `
+    <div class="card fade-in">
+      <h3 style="font-size:16px;font-weight:800;margin-bottom:4px;">${esc(data.jobTitle)}</h3>
+      <p style="font-size:12.5px;color:var(--gray);margin-bottom:20px;">${esc(data.basicInfo?.department||"")}</p>
+
+      <div class="jd-block"><h5>الغرض من الوظيفة</h5><p style="font-size:13px;color:var(--slate);line-height:1.8;">${esc(nn(data.purpose))}</p></div>
+      <div class="jd-block"><h5>المهام الرئيسية</h5><ul>${tasks || "<li>—</li>"}</ul></div>
+      <div class="jd-block"><h5>المسؤوليات</h5>${resp}</div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="jd-block"><h5>العلاقات الداخلية</h5><ul>${rel(data.relationsInternal)}</ul></div>
+        <div class="jd-block"><h5>العلاقات الخارجية</h5><ul>${rel(data.relationsExternal)}</ul></div>
+      </div>
+      <div class="jd-block"><h5>الأدوات المستخدمة</h5><ul>${rel(data.tools)}</ul></div>
+      <div class="grid" style="grid-template-columns:1fr 1fr 1fr;">
+        ${kv("المؤهل العلمي", data.education)}${kv("التدريب", data.training)}${kv("الخبرة", data.experience)}
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   تقييم الأداء (KPIs) — مع مقياس السرعة (Signature Gauge)
+   ============================================================ */
+function gaugeSvg(percent){
+  const p = Math.max(0, Math.min(100, Number(percent)||0));
+  const r = 54, cx = 70, cy = 70;
+  const startAngle = 180, endAngle = 0; // semi-circle top
+  const angle = 180 - (p/100)*180;
+  const toXY = (deg)=>{ const rad = deg*Math.PI/180; return [cx - r*Math.cos(rad), cy - r*Math.sin(rad)]; };
+  const [nx, ny] = toXY(angle);
+  const trackPath = `M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}`;
+  const pct = p/100;
+  const arcLen = Math.PI*r;
+  return `
+  <svg width="140" height="90" viewBox="0 0 140 90">
+    <path d="${trackPath}" fill="none" stroke="#EDEDF1" stroke-width="12" stroke-linecap="round"/>
+    <path d="${trackPath}" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round"
+      stroke-dasharray="${arcLen}" stroke-dashoffset="${arcLen*(1-pct)}"/>
+    <defs><linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8F1229"/><stop offset="100%" stop-color="#C81E3A"/>
+    </linearGradient></defs>
+    <line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#15171C" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="5" fill="#15171C"/>
+  </svg>`;
+}
+async function renderKPIs(){
+  const vp = document.getElementById("viewport");
+  const picker = monthYearPicker(()=> renderKPIs());
+  vp.innerHTML = picker + loadingHtml();
+  const data = await callApi("getEmployeeData", [state.password, state.month, state.year, "kpis"]);
+  let body;
+  if (!data || !data.type) {
+    body = emptyHtml("لا يوجد تقييم مسجل لهذا الشهر");
+  } else {
+    const rows = (list)=> list.map(x=>`
+      <tr><td>${esc(x.desc)}</td><td>${esc(x.weight)}%</td><td>${esc(x.degree)}/10</td><td>${(x.percentageScored||0).toFixed(1)}%</td></tr>
+    `).join("");
+    body = `
+      <div class="card fade-in" style="display:flex;align-items:center;gap:26px;flex-wrap:wrap;">
+        ${gaugeSvg(data.totalScored)}
+        <div>
+          <div class="gauge-num" style="font-size:30px;color:var(--red-dark);">${(data.totalScored||0).toFixed(1)}%</div>
+          <div style="font-size:12.5px;color:var(--gray);">التقييم الإجمالي — ${esc(data.month)}</div>
+        </div>
+      </div>
+      <div class="section-title"><span class="dot"></span>المؤشرات الفنية (${data.totalTechWeight}%)</div>
+      <div class="table-wrap fade-in"><table><thead><tr><th>المؤشر</th><th>الوزن</th><th>الدرجة</th><th>النتيجة</th></tr></thead><tbody>${rows(data.technical)||`<tr><td colspan="4">لا يوجد</td></tr>`}</tbody></table></div>
+      <div class="section-title"><span class="dot"></span>المؤشرات السلوكية (${data.totalBehavWeight}%)</div>
+      <div class="table-wrap fade-in"><table><thead><tr><th>المؤشر</th><th>الوزن</th><th>الدرجة</th><th>النتيجة</th></tr></thead><tbody>${rows(data.behavioral)||`<tr><td colspan="4">لا يوجد</td></tr>`}</tbody></table></div>
+    `;
+  }
+  vp.innerHTML = picker + body;
+  document.getElementById("monthSel").addEventListener("change", e=>{ state.month = e.target.value; renderKPIs(); });
+  document.getElementById("yearSel").addEventListener("change", e=>{ state.year = e.target.value; renderKPIs(); });
+}
+
+/* ============================================================
+   الهيكل التنظيمي
+   ============================================================ */
+async function renderOrgChart(){
+  const data = await callApi("getEmployeeData", [state.password, "", "", "orgchart"]);
+  const vp = document.getElementById("viewport");
+  if (!data || !data.me) { vp.innerHTML = emptyHtml("لا تتوفر بيانات هيكل تنظيمي"); return; }
+  const chain = (data.chain||[]).map(p=>`
+    <div class="org-node"><div class="avc">${initials(p.name)}</div>${esc(p.name)}</div><span class="org-arrow">←</span>
+  `).join("");
+  const team = (data.team||[]).map(p=>`
+    <div class="team-card"><div class="avc">${initials(p.name)}</div><h6>${esc(p.name)}</h6><span>${esc(p.jobTitle||"")}</span></div>
+  `).join("");
+  vp.innerHTML = `
+    <div class="section-title" style="margin-top:0;"><span class="dot"></span>السلسلة الإدارية</div>
+    <div class="org-chain fade-in">
+      ${chain}
+      <div class="org-node org-me"><div class="avc">${initials(data.me.name)}</div>${esc(data.me.name)}</div>
+    </div>
+    <div class="section-title"><span class="dot"></span>فريق العمل المباشر</div>
+    ${team ? `<div class="team-grid fade-in">${team}</div>` : emptyHtml("لا يوجد فريق تابع لك مباشرة")}
+  `;
+}
+
+/* ============================================================
+   الطلبات (إجازات / أذونات / مأموريات)
+   ============================================================ */
+let requestsData = null;
+let activeReqTab = "leave";
+
+async function renderRequests(){
+  const vp = document.getElementById("viewport");
+  vp.innerHTML = loadingHtml();
+  requestsData = await callApi("getAllRequestsScreenData", [state.password]);
+  drawRequestsTabs();
+}
+function drawRequestsTabs(){
+  const vp = document.getElementById("viewport");
+  vp.innerHTML = `
+    <div class="tabs">
+      <button class="tab-btn ${activeReqTab==='leave'?'active':''}" data-tab="leave">الإجازات</button>
+      <button class="tab-btn ${activeReqTab==='permission'?'active':''}" data-tab="permission">الأذونات</button>
+      <button class="tab-btn ${activeReqTab==='mission'?'active':''}" data-tab="mission">المأموريات</button>
+    </div>
+    <div id="reqTabBody"></div>
+  `;
+  vp.querySelectorAll(".tab-btn").forEach(b=> b.addEventListener("click", ()=>{ activeReqTab = b.dataset.tab; drawRequestsTabs(); }));
+  const body = document.getElementById("reqTabBody");
+  if (activeReqTab === "leave") body.innerHTML = leaveTabHtml();
+  if (activeReqTab === "permission") body.innerHTML = permissionTabHtml();
+  if (activeReqTab === "mission") body.innerHTML = missionTabHtml();
+  bindRequestFormEvents();
+  bindRequestActionEvents();
+}
+
+function reqCard(r, kind){
+  const statusCls = r.status === "تمت الموافقة" ? "ok" : (r.status === "مرفوض" ? "bad" : "warn");
+  let detail = "";
+  if (kind === "leave") detail = `${esc(r.leaveType)} · من ${esc(r.startDate)} إلى ${esc(r.endDate)} · ${esc(r.daysCount)} يوم`;
+  if (kind === "permission") detail = `${esc(r.permissionType)} · ${esc(r.permissionDate)} · ${esc(r.permissionDuration)}`;
+  if (kind === "mission") detail = `${esc(r.missionType)} · ${esc(r.missionDate)} · ${esc(r.checkInTime||"")}${r.checkOutTime?(" - "+esc(r.checkOutTime)):""}`;
+  return `
+    <div class="req-card fade-in">
+      <div class="top">
+        <div><h5>${esc(r.employeeName||state.me.name)}</h5><div class="sub">${detail}</div></div>
+        <span class="pill ${statusCls}">${esc(r.status)}</span>
+      </div>
+      ${r.notes || r.missionReason ? `<div class="body-txt">${esc(r.notes||r.missionReason)}</div>` : ""}
+      ${r.rejectReason ? `<div class="body-txt" style="color:var(--red-dark)">سبب الرفض: ${esc(r.rejectReason)}</div>` : ""}
+    </div>`;
+}
+function pendingCard(r, kind){
+  let detail = "";
+  if (kind === "leave") detail = `${esc(r.leaveType)} · من ${esc(r.startDate)} إلى ${esc(r.endDate)} · ${esc(r.daysCount)} يوم`;
+  if (kind === "permission") detail = `${esc(r.permissionType)} · ${esc(r.permissionDate)} · ${esc(r.permissionDuration)}`;
+  if (kind === "mission") detail = `${esc(r.missionType)} · ${esc(r.missionDate)} · ${esc(r.checkInTime||"")}${r.checkOutTime?(" - "+esc(r.checkOutTime)):""}`;
+  return `
+    <div class="req-card fade-in">
+      <div class="top">
+        <div><h5>${esc(r.employeeName)}</h5><div class="sub">${esc(r.jobTitle||"")} · ${detail}</div></div>
+      </div>
+      ${r.notes || r.missionReason ? `<div class="body-txt">${esc(r.notes||r.missionReason)}</div>` : ""}
+      <div class="req-actions">
+        <button class="btn-approve" data-kind="${kind}" data-id="${esc(r.requestId)}" data-decision="approve">✓ موافقة</button>
+        <button class="btn-reject" data-kind="${kind}" data-id="${esc(r.requestId)}" data-decision="reject">✕ رفض</button>
+      </div>
+    </div>`;
+}
+
+function leaveTabHtml(){
+  const d = requestsData.leave || {};
+  const mine = (d.myRequests||[]).map(r=> reqCard(r,"leave")).join("") || emptyHtml("لا يوجد طلبات إجازة سابقة");
+  const pending = (d.pendingForMe||[]).map(r=> pendingCard(r,"leave")).join("");
+  return `
+    <div class="card" style="margin-bottom:20px;">
+      <h4 style="font-size:14px;font-weight:800;margin-bottom:14px;">طلب إجازة جديد</h4>
+      <form id="leaveForm" class="form-grid">
+        <div><label>نوع الإجازة</label><select name="leaveType" required><option value="سنوي">سنوي</option><option value="رسمي">رسمي</option></select></div>
+        <div><label>من تاريخ</label><input type="date" name="startDate" required></div>
+        <div><label>إلى تاريخ</label><input type="date" name="endDate" required></div>
+        <div class="full"><label>ملاحظات (اختياري)</label><textarea name="notes"></textarea></div>
+        <div class="full"><button type="submit" class="btn btn-primary">إرسال الطلب</button></div>
+      </form>
+    </div>
+    ${pending ? `<div class="section-title" style="margin-top:0;"><span class="dot"></span>طلبات بانتظار موافقتك</div>${pending}` : ""}
+    <div class="section-title"><span class="dot"></span>طلباتي</div>
+    ${mine}
+  `;
+}
+function permissionTabHtml(){
+  const d = requestsData.permissions || {};
+  const mine = (d.myRequests||[]).map(r=> reqCard(r,"permission")).join("") || emptyHtml("لا يوجد طلبات إذن سابقة");
+  const pending = (d.pendingForMe||[]).map(r=> pendingCard(r,"permission")).join("");
+  return `
+    <div class="card" style="margin-bottom:20px;">
+      <h4 style="font-size:14px;font-weight:800;margin-bottom:14px;">طلب إذن جديد</h4>
+      <form id="permissionForm" class="form-grid">
+        <div><label>نوع الإذن</label><select name="permissionType" required><option value="تأخير">تأخير</option><option value="انصراف">انصراف</option></select></div>
+        <div><label>التاريخ</label><input type="date" name="permissionDate" required></div>
+        <div><label>المدة (بالساعة)</label><input type="text" name="permissionDuration" placeholder="مثال: ساعة" required></div>
+        <div class="full"><label>ملاحظات (اختياري)</label><textarea name="notes"></textarea></div>
+        <div class="full"><button type="submit" class="btn btn-primary">إرسال الطلب</button></div>
+      </form>
+    </div>
+    ${pending ? `<div class="section-title" style="margin-top:0;"><span class="dot"></span>طلبات بانتظار موافقتك</div>${pending}` : ""}
+    <div class="section-title"><span class="dot"></span>طلباتي</div>
+    ${mine}
+  `;
+}
+function missionTabHtml(){
+  const d = requestsData.missions || {};
+  const mine = (d.myRequests||[]).map(r=> reqCard(r,"mission")).join("") || emptyHtml("لا يوجد طلبات مأمورية سابقة");
+  const pending = (d.pendingForMe||[]).map(r=> pendingCard(r,"mission")).join("");
+  return `
+    <div class="card" style="margin-bottom:20px;">
+      <h4 style="font-size:14px;font-weight:800;margin-bottom:14px;">طلب مأمورية جديدة</h4>
+      <form id="missionForm" class="form-grid">
+        <div><label>نوع المأمورية</label><select name="missionType" required><option value="دخول">دخول</option><option value="خروج">خروج</option><option value="دخول وخروج">دخول وخروج</option></select></div>
+        <div><label>التاريخ</label><input type="date" name="missionDate" required></div>
+        <div><label>وقت الدخول</label><input type="time" name="checkInTime"></div>
+        <div><label>وقت الخروج</label><input type="time" name="checkOutTime"></div>
+        <div class="full"><label>سبب المأمورية</label><textarea name="missionReason" required></textarea></div>
+        <div class="full"><button type="submit" class="btn btn-primary">إرسال الطلب</button></div>
+      </form>
+    </div>
+    ${pending ? `<div class="section-title" style="margin-top:0;"><span class="dot"></span>طلبات بانتظار موافقتك</div>${pending}` : ""}
+    <div class="section-title"><span class="dot"></span>طلباتي</div>
+    ${mine}
+  `;
+}
+
+function bindRequestFormEvents(){
+  const leaveForm = document.getElementById("leaveForm");
+  if (leaveForm) leaveForm.addEventListener("submit", async e=>{
+    e.preventDefault();
+    const f = new FormData(leaveForm);
+    const res = await callApi("submitLeaveRequest", [state.password, f.get("leaveType"), f.get("startDate"), f.get("endDate"), f.get("notes")||"", []]);
+    handleSubmitResult(res, "requests");
+  });
+  const permForm = document.getElementById("permissionForm");
+  if (permForm) permForm.addEventListener("submit", async e=>{
+    e.preventDefault();
+    const f = new FormData(permForm);
+    const res = await callApi("submitPermissionRequest", [state.password, f.get("permissionType"), f.get("permissionDate"), f.get("permissionDuration"), f.get("notes")||""]);
+    handleSubmitResult(res, "requests");
+  });
+  const missForm = document.getElementById("missionForm");
+  if (missForm) missForm.addEventListener("submit", async e=>{
+    e.preventDefault();
+    const f = new FormData(missForm);
+    const res = await callApi("submitMissionRequest", [state.password, f.get("missionDate"), f.get("checkInTime")||"", f.get("checkOutTime")||"", f.get("missionType"), f.get("missionReason")]);
+    handleSubmitResult(res, "requests");
+  });
+}
+function handleSubmitResult(res, refreshView){
+  if (res && res.success) { toast("تم إرسال الطلب بنجاح ✓"); goTo(refreshView); }
+  else { toast((res && res.error) || "حصل خطأ، حاول تاني", "err"); }
+}
+function bindRequestActionEvents(){
+  document.querySelectorAll(".btn-approve, .btn-reject").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      const kind = btn.dataset.kind, id = btn.dataset.id, decision = btn.dataset.decision;
+      let reason = "";
+      if (decision === "reject") { reason = prompt("سبب الرفض (اختياري):") || ""; }
+      const fnMap = { leave:"respondToLeaveRequest", permission:"respondToPermissionRequest", mission:"respondToMissionRequest" };
+      try {
+        const res = await callApi(fnMap[kind], [state.password, id, decision, reason]);
+        if (res && res.success) { toast(decision === "approve" ? "تمت الموافقة ✓" : "تم الرفض"); renderRequests(); }
+        else { toast((res && res.error) || "حصل خطأ", "err"); }
+      } catch(err) { toast("حصل خطأ في الاتصال", "err"); }
+    });
+  });
+}
+</script>
+</body>
+</html>
